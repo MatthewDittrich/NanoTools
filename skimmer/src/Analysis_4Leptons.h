@@ -8,13 +8,13 @@
 // ROOT
 #include "TString.h"
 // NanoCORE
+#include "Config.h" // gconf
 #include "Nano.h"
-#include "Config.h"             // gconf
 #include "Tools/goodrun.h"
 
 #include "Analysis.h"
-#include "ObjectSelection_Leptons.h"
 #include "ObjectSelection_Jets.h"
+#include "ObjectSelection_Leptons.h"
 
 typedef std::vector<LorentzVector> LorentzVectors;
 typedef std::vector<double> Doubles;
@@ -23,66 +23,54 @@ typedef std::vector<unsigned int> Indices;
 
 class Analysis_4Leptons : public Analysis
 {
-public:
+  public:
+    // Constructor
+    Analysis_4Leptons(Arbusto &arbusto_ref, Nano &nt_ref, HEPCLI &cli_ref, Cutflow &cutflow_ref) : Analysis(arbusto_ref, nt_ref, cli_ref, cutflow_ref) {}
 
-  // Constructor
-  Analysis_4Leptons(Arbusto &arbusto_ref, Nano &nt_ref, HEPCLI &cli_ref, Cutflow &cutflow_ref)
-      : Analysis(arbusto_ref, nt_ref, cli_ref, cutflow_ref)
-  {
-  }
+    // Initialize branches to be added to output "Events" TTree
+    void initBranches() override
+    {
+        Analysis::initBranches();
 
-  // Initialize branches to be added to output "Events" TTree
-  void initBranches() override
-  {
-    Analysis::initBranches();
+        // These actually create empty branches if the final skimmer cut is after NoVetoLeptons
+        // arbusto.newVecBranch<int>("veto_lep_p4s", {});
+        // arbusto.newVecBranch<unsigned int>("veto_lep_idxs", {});
+        // arbusto.newVecBranch<int>("veto_lep_jet_idxs", {});
+        // arbusto.newVecBranch<int>("veto_lep_pdgIDs", {});
+    }
 
-    // These actually create empty branches if the final skimmer cut is after NoVetoLeptons
-    //arbusto.newVecBranch<int>("veto_lep_p4s", {});
-    //arbusto.newVecBranch<unsigned int>("veto_lep_idxs", {});
-    //arbusto.newVecBranch<int>("veto_lep_jet_idxs", {});
-    //arbusto.newVecBranch<int>("veto_lep_pdgIDs", {});
+    // Define global variables and cutflow to be run in event loop
+    // Note: the variables are set in the event loop when performing the object selection.
+    //       The cutflow has to be run after the appropriate object selection has been performed.
 
-  }
+    void initCutflow() override
+    {
+        // // Initialize variables needed in cutflow.
+        // cutflow.globals.newVar<LorentzVectors>("veto_lep_p4s", {});
+        // cutflow.globals.newVar<LorentzVectors>("tight_lep_p4s", {});
+        // cutflow.globals.newVar<LorentzVectors>("ak4jets_p4s", {});
+        // cutflow.globals.newVar<LorentzVectors>("ak8jets_p4s", {});
+        // cutflow.globals.newVar<double>("ht_ak8", -999);
+        // cutflow.globals.newVar<double>("ht_ak4", -999);
+        // cutflow.globals.newVar<int>("n_ak4jets", -999);
+        // cutflow.globals.newVar<int>("n_ak8jets", -999);
+        // cutflow.globals.newVar<int>("n_vbsjet_pairs", -999);
 
-  // Define global variables and cutflow to be run in event loop
-  // Note: the variables are set in the event loop when performing the object selection. 
-  //       The cutflow has to be run after the appropriate object selection has been performed.
+        // Lepton selection
+        Cut *cut_fourleptons = new LambdaCut("FourLeptons", [&]() { return (cutflow.globals.getVal<LorentzVectors>("vvh_veto_lep_p4s").size() >= 4); });
+        vCutflowCuts_.push_back(cut_fourleptons);
 
-  void initCutflow() override
-  {
-    // // Initialize variables needed in cutflow.
-    // cutflow.globals.newVar<LorentzVectors>("veto_lep_p4s", {});
-    // cutflow.globals.newVar<LorentzVectors>("tight_lep_p4s", {});
-    // cutflow.globals.newVar<LorentzVectors>("ak4jets_p4s", {});
-    // cutflow.globals.newVar<LorentzVectors>("ak8jets_p4s", {});
-    // cutflow.globals.newVar<double>("ht_ak8", -999);
-    // cutflow.globals.newVar<double>("ht_ak4", -999);
-    // cutflow.globals.newVar<int>("n_ak4jets", -999);
-    // cutflow.globals.newVar<int>("n_ak8jets", -999);
-    // cutflow.globals.newVar<int>("n_vbsjet_pairs", -999);
+        //    Cut *cut_leadinglepton_pt = new LambdaCut(
+        //        "LeadingLeptonPT",
+        //        [&]()
+        //        {
+        //          return (cutflow.globals.getVal<double>("vvh_lep_pt_lead") >= 20);
+        //        });
+        //    vCutflowCuts_.push_back(cut_leadinglepton_pt);
 
-
-    // Lepton selection
-    Cut *cut_fourleptons = new LambdaCut(
-        "FourLeptons",
-        [&]()
-        {
-          return (cutflow.globals.getVal<LorentzVectors>("vvh_veto_lep_p4s").size() >= 4);
-        });
-    vCutflowCuts_.push_back(cut_fourleptons);
-
-//    Cut *cut_leadinglepton_pt = new LambdaCut(
-//        "LeadingLeptonPT",
-//        [&]()
-//        {
-//          return (cutflow.globals.getVal<double>("vvh_lep_pt_lead") >= 20);
-//        });
-//    vCutflowCuts_.push_back(cut_leadinglepton_pt);
-
-    finalSkimmerCut_ = "FourLeptons";
-    Analysis::initCutflow();
-  }
-
+        finalSkimmerCut_ = "FourLeptons";
+        Analysis::initCutflow();
+    }
 };
 
 #endif
