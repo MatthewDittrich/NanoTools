@@ -141,7 +141,7 @@ int main(int argc, char **argv)
           // progess bar printing
           bar.progress(looper.n_events_processed, looper.n_events_total);
 
-          skimmer->runPerEvent();
+          skimmer->runPerEvent(entry);
 
           // Only store events that passed the selection
           if (!skimmer->eventPassed())

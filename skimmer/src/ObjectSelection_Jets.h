@@ -16,24 +16,60 @@
 #include "hepcli.h"
 // Custom skimmer
 #include "ObjectSelection_Base.h"
+#include "JetId.h"
 #include "utilities.h" // Utilities::Variables
 // ROOT
 #include "TString.h"
+#include "TTree.h"
+#include "TBranch.h"
 
 typedef std::vector<LorentzVector> LorentzVectors;
 typedef std::vector<double> Doubles;
 typedef std::vector<int> Integers;
 typedef std::vector<unsigned int> Indices;
 
+// Max array sizes (must match NanoCORE Nano.h)
+#define JETID_NJET_MAX 250
+#define JETID_NFATJET_MAX 18
+
 class JetSelection : public ObjectSelection
 {
   public:
 
+    // JetId evaluator (correctionlib-based)
+    std::unique_ptr<JetIdEvaluator> jetIdEval_;
+
+    // TBranch pointers and arrays for NanoAODv15 variables not in NanoCORE
+    // AK4 jets: multiplicity variables (UChar_t in NanoAODv15)
+    TBranch *b_Jet_chMultiplicity_ = nullptr;
+    TBranch *b_Jet_neMultiplicity_ = nullptr;
+    UChar_t Jet_chMultiplicity_[JETID_NJET_MAX];
+    UChar_t Jet_neMultiplicity_[JETID_NJET_MAX];
+
+    // AK8 fat jets: energy fraction and multiplicity variables
+    TBranch *b_FatJet_chHEF_ = nullptr;
+    TBranch *b_FatJet_neHEF_ = nullptr;
+    TBranch *b_FatJet_chEmEF_ = nullptr;
+    TBranch *b_FatJet_neEmEF_ = nullptr;
+    TBranch *b_FatJet_muEF_ = nullptr;
+    TBranch *b_FatJet_chMultiplicity_ = nullptr;
+    TBranch *b_FatJet_neMultiplicity_ = nullptr;
+    float FatJet_chHEF_[JETID_NFATJET_MAX];
+    float FatJet_neHEF_[JETID_NFATJET_MAX];
+    float FatJet_chEmEF_[JETID_NFATJET_MAX];
+    float FatJet_neEmEF_[JETID_NFATJET_MAX];
+    float FatJet_muEF_[JETID_NFATJET_MAX];
+    Short_t FatJet_chMultiplicity_[JETID_NFATJET_MAX];
+    Short_t FatJet_neMultiplicity_[JETID_NFATJET_MAX];
+
+    bool hasJetMultBranches_ = false;
+    bool hasFatJetIdBranches_ = false;
 
     JetSelection(Arbusto &arbusto_ref, Nano &nt_ref, HEPCLI &cli_ref, Utilities::Variables &cutflow_globals_ref)
         : ObjectSelection(arbusto_ref, nt_ref, cli_ref, cutflow_globals_ref)
         {
-           // Do nothing
+           // Initialize correctionlib jet ID evaluator
+           jetIdEval_ = std::make_unique<JetIdEvaluator>(JET_ID_JSON_2024);
         };
 
     // DeltaR calculation
@@ -55,6 +91,101 @@ class JetSelection : public ObjectSelection
           return false;
       }
       return true;
+    }
+
+    // Initialize TTree branch addresses for NanoAODv15 variables not in NanoCORE
+    void initTree(TTree *tree)
+    {
+      // AK4 jet multiplicity branches
+      b_Jet_chMultiplicity_ = tree->GetBranch("Jet_chMultiplicity");
+      if (b_Jet_chMultiplicity_) { b_Jet_chMultiplicity_->SetAddress(Jet_chMultiplicity_); }
+      b_Jet_neMultiplicity_ = tree->GetBranch("Jet_neMultiplicity");
+      if (b_Jet_neMultiplicity_) { b_Jet_neMultiplicity_->SetAddress(Jet_neMultiplicity_); }
+      hasJetMultBranches_ = (b_Jet_chMultiplicity_ != nullptr && b_Jet_neMultiplicity_ != nullptr);
+
+      // AK8 fat jet energy fraction and multiplicity branches
+      b_FatJet_chHEF_ = tree->GetBranch("FatJet_chHEF");
+      if (b_FatJet_chHEF_) { b_FatJet_chHEF_->SetAddress(FatJet_chHEF_); }
+      b_FatJet_neHEF_ = tree->GetBranch("FatJet_neHEF");
+      if (b_FatJet_neHEF_) { b_FatJet_neHEF_->SetAddress(FatJet_neHEF_); }
+      b_FatJet_chEmEF_ = tree->GetBranch("FatJet_chEmEF");
+      if (b_FatJet_chEmEF_) { b_FatJet_chEmEF_->SetAddress(FatJet_chEmEF_); }
+      b_FatJet_neEmEF_ = tree->GetBranch("FatJet_neEmEF");
+      if (b_FatJet_neEmEF_) { b_FatJet_neEmEF_->SetAddress(FatJet_neEmEF_); }
+      b_FatJet_muEF_ = tree->GetBranch("FatJet_muEF");
+      if (b_FatJet_muEF_) { b_FatJet_muEF_->SetAddress(FatJet_muEF_); }
+      b_FatJet_chMultiplicity_ = tree->GetBranch("FatJet_chMultiplicity");
+      if (b_FatJet_chMultiplicity_) { b_FatJet_chMultiplicity_->SetAddress(FatJet_chMultiplicity_); }
+      b_FatJet_neMultiplicity_ = tree->GetBranch("FatJet_neMultiplicity");
+      if (b_FatJet_neMultiplicity_) { b_FatJet_neMultiplicity_->SetAddress(FatJet_neMultiplicity_); }
+      hasFatJetIdBranches_ = (b_FatJet_chHEF_ != nullptr && b_FatJet_neHEF_ != nullptr &&
+                              b_FatJet_chEmEF_ != nullptr && b_FatJet_neEmEF_ != nullptr &&
+                              b_FatJet_muEF_ != nullptr &&
+                              b_FatJet_chMultiplicity_ != nullptr && b_FatJet_neMultiplicity_ != nullptr);
+    }
+
+    // Load the extra NanoAODv15 branches for the current entry
+    void loadEntry(int entry)
+    {
+      if (b_Jet_chMultiplicity_) { b_Jet_chMultiplicity_->GetEntry(entry); }
+      if (b_Jet_neMultiplicity_) { b_Jet_neMultiplicity_->GetEntry(entry); }
+      if (b_FatJet_chHEF_) { b_FatJet_chHEF_->GetEntry(entry); }
+      if (b_FatJet_neHEF_) { b_FatJet_neHEF_->GetEntry(entry); }
+      if (b_FatJet_chEmEF_) { b_FatJet_chEmEF_->GetEntry(entry); }
+      if (b_FatJet_neEmEF_) { b_FatJet_neEmEF_->GetEntry(entry); }
+      if (b_FatJet_muEF_) { b_FatJet_muEF_->GetEntry(entry); }
+      if (b_FatJet_chMultiplicity_) { b_FatJet_chMultiplicity_->GetEntry(entry); }
+      if (b_FatJet_neMultiplicity_) { b_FatJet_neMultiplicity_->GetEntry(entry); }
+    }
+
+    // Compute Jet_jetId and FatJet_jetId using correctionlib and store in output branches
+    void computeJetIds()
+    {
+      // Compute AK4 Jet_jetId
+      if (hasJetMultBranches_)
+      {
+        std::vector<float> jetIds;
+        unsigned int nJets = std::min(static_cast<unsigned int>(nt.nJet()), static_cast<unsigned int>(nt.Jet_eta().size()));
+        for (unsigned int i = 0; i < nJets; i++)
+        {
+          int chMult = static_cast<int>(Jet_chMultiplicity_[i]);
+          int neMult = static_cast<int>(Jet_neMultiplicity_[i]);
+          int mult = chMult + neMult;
+          float id = jetIdEval_->evalJetId(
+              nt.Jet_eta().at(i),
+              nt.Jet_chHEF().at(i),
+              nt.Jet_neHEF().at(i),
+              nt.Jet_chEmEF().at(i),
+              nt.Jet_neEmEF().at(i),
+              nt.Jet_muEF().at(i),
+              chMult, neMult, mult);
+          jetIds.push_back(id);
+        }
+        arbusto.setVecLeaf<float>("Jet_jetId", jetIds);
+      }
+
+      // Compute AK8 FatJet_jetId
+      if (hasFatJetIdBranches_)
+      {
+        std::vector<float> fatJetIds;
+        unsigned int nFatJets = std::min(static_cast<unsigned int>(nt.nFatJet()), static_cast<unsigned int>(nt.FatJet_eta().size()));
+        for (unsigned int i = 0; i < nFatJets; i++)
+        {
+          int chMult = static_cast<int>(FatJet_chMultiplicity_[i]);
+          int neMult = static_cast<int>(FatJet_neMultiplicity_[i]);
+          int mult = chMult + neMult;
+          float id = jetIdEval_->evalFatJetId(
+              nt.FatJet_eta().at(i),
+              FatJet_chHEF_[i],
+              FatJet_neHEF_[i],
+              FatJet_chEmEF_[i],
+              FatJet_neEmEF_[i],
+              FatJet_muEF_[i],
+              chMult, neMult, mult);
+          fatJetIds.push_back(id);
+        }
+        arbusto.setVecLeaf<float>("FatJet_jetId", fatJetIds);
+      }
     }
 
     void selectVVHJets()
@@ -85,7 +216,7 @@ class JetSelection : public ObjectSelection
       for (unsigned int fatjet_i = 0; fatjet_i < nt.nFatJet(); fatjet_i++)
       {
         LorentzVector fatjet_p4 = nt.FatJet_p4().at(fatjet_i);
-        if (fatjet_p4.pt() > 200 && nt.FatJet_msoftdrop().at(fatjet_i) > 20) 
+        if (fatjet_p4.pt() > 200 && nt.FatJet_msoftdrop().at(fatjet_i) > 20)
         {
           fatjet_p4s.push_back(fatjet_p4);
         }

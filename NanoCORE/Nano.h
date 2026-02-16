@@ -451,7 +451,7 @@ protected:
     bool loaded_Electron_genPartFlav_;
     unsigned int counter_cached_Electron_genPartFlav_;
     unsigned int counter_uncached_Electron_genPartFlav_;
-    int Electron_genPartIdx_[NELECTRON_MAX];
+    Short_t Electron_genPartIdx_[NELECTRON_MAX];
     vector<int> v_Electron_genPartIdx_;
     TBranch *b_Electron_genPartIdx_;
     bool loaded_Electron_genPartIdx_;
@@ -2059,7 +2059,7 @@ protected:
     bool loaded_GenPart_eta_;
     unsigned int counter_cached_GenPart_eta_;
     unsigned int counter_uncached_GenPart_eta_;
-    int GenPart_genPartIdxMother_[NGENPART_MAX];
+    Short_t GenPart_genPartIdxMother_[NGENPART_MAX];
     vector<int> v_GenPart_genPartIdxMother_;
     TBranch *b_GenPart_genPartIdxMother_;
     bool loaded_GenPart_genPartIdxMother_;
@@ -2100,7 +2100,7 @@ protected:
     bool loaded_GenPart_status_;
     unsigned int counter_cached_GenPart_status_;
     unsigned int counter_uncached_GenPart_status_;
-    int GenPart_statusFlags_[NGENPART_MAX];
+    UShort_t GenPart_statusFlags_[NGENPART_MAX];
     vector<int> v_GenPart_statusFlags_;
     TBranch *b_GenPart_statusFlags_;
     bool loaded_GenPart_statusFlags_;
@@ -2148,7 +2148,7 @@ protected:
     bool loaded_GenVisTau_eta_;
     unsigned int counter_cached_GenVisTau_eta_;
     unsigned int counter_uncached_GenVisTau_eta_;
-    int GenVisTau_genPartIdxMother_[NGENVISTAU_MAX];
+    Short_t GenVisTau_genPartIdxMother_[NGENVISTAU_MAX];
     vector<int> v_GenVisTau_genPartIdxMother_;
     TBranch *b_GenVisTau_genPartIdxMother_;
     bool loaded_GenVisTau_genPartIdxMother_;
@@ -15617,7 +15617,7 @@ protected:
     bool loaded_LowPtElectron_genPartFlav_;
     unsigned int counter_cached_LowPtElectron_genPartFlav_;
     unsigned int counter_uncached_LowPtElectron_genPartFlav_;
-    int LowPtElectron_genPartIdx_[NLOWPTELECTRON_MAX];
+    Short_t LowPtElectron_genPartIdx_[NLOWPTELECTRON_MAX];
     vector<int> v_LowPtElectron_genPartIdx_;
     TBranch *b_LowPtElectron_genPartIdx_;
     bool loaded_LowPtElectron_genPartIdx_;
@@ -16246,7 +16246,7 @@ protected:
     bool loaded_Muon_genPartFlav_;
     unsigned int counter_cached_Muon_genPartFlav_;
     unsigned int counter_uncached_Muon_genPartFlav_;
-    int Muon_genPartIdx_[NMUON_MAX];
+    Short_t Muon_genPartIdx_[NMUON_MAX];
     vector<int> v_Muon_genPartIdx_;
     TBranch *b_Muon_genPartIdx_;
     bool loaded_Muon_genPartIdx_;
@@ -16791,7 +16791,7 @@ protected:
     bool loaded_Photon_genPartFlav_;
     unsigned int counter_cached_Photon_genPartFlav_;
     unsigned int counter_uncached_Photon_genPartFlav_;
-    int Photon_genPartIdx_[NPHOTON_MAX];
+    Short_t Photon_genPartIdx_[NPHOTON_MAX];
     vector<int> v_Photon_genPartIdx_;
     TBranch *b_Photon_genPartIdx_;
     bool loaded_Photon_genPartIdx_;
@@ -17635,7 +17635,7 @@ protected:
     bool loaded_Tau_genPartFlav_;
     unsigned int counter_cached_Tau_genPartFlav_;
     unsigned int counter_uncached_Tau_genPartFlav_;
-    int Tau_genPartIdx_[NTAU_MAX];
+    Short_t Tau_genPartIdx_[NTAU_MAX];
     vector<int> v_Tau_genPartIdx_;
     TBranch *b_Tau_genPartIdx_;
     bool loaded_Tau_genPartIdx_;
@@ -18051,7 +18051,7 @@ protected:
     bool loaded_boostedTau_genPartFlav_;
     unsigned int counter_cached_boostedTau_genPartFlav_;
     unsigned int counter_uncached_boostedTau_genPartFlav_;
-    int boostedTau_genPartIdx_[NBOOSTEDTAU_MAX];
+    Short_t boostedTau_genPartIdx_[NBOOSTEDTAU_MAX];
     vector<int> v_boostedTau_genPartIdx_;
     TBranch *b_boostedTau_genPartIdx_;
     bool loaded_boostedTau_genPartIdx_;

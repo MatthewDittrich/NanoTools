@@ -65,6 +65,10 @@ class Analysis
       truthAna.initTruthBranches();
     }
     leptonTruthAna.initBranches();
+
+    // Jet ID branches (computed via correctionlib for NanoAODv15)
+    arbusto.newVecBranch<float>("Jet_jetId");
+    arbusto.newVecBranch<float>("FatJet_jetId");
   }
 
   // Define global variables and cutflow to be run in event loop
@@ -145,16 +149,23 @@ initPerTTree(TTree *ttree)
 
     // Set config (e.g. year, isAPV)
     TString file_name = cli.input_tchain->GetCurrentFile()->GetName();
-    gconf.GetConfigsFromDatasetName(file_name.Data()); 
+    gconf.GetConfigsFromDatasetName(file_name.Data());
+
+    // Initialize TTree branch addresses for jet ID computation (NanoAODv15 variables)
+    jetSelection.initTree(ttree);
   }
 
   // Run per event in the event loop
-  virtual void runPerEvent()
+  virtual void runPerEvent(int entry)
   {
 
     // Reset branches and globals
     arbusto.resetBranches();
     cutflow.globals.resetVars();
+
+    // Load extra NanoAODv15 branches and compute jet IDs
+    jetSelection.loadEntry(entry);
+    jetSelection.computeJetIds();
 
     // Dump truth information
     if (cli.is_signal && cli.dump_truth)
