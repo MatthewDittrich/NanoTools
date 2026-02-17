@@ -94,7 +94,11 @@ class JetSelection : public ObjectSelection
         // Initialize correctionlib jet ID evaluator using year-aware JSON path
         std::string dsname = cli.input_tchain->GetCurrentFile()->GetName();
         std::string jsonPath = JetIdEvaluator::getJsonPath(gconf.year, dsname);
-        if (jsonPath.empty())
+        if (jsonPath.empty() && gconf.year >= 2016 && gconf.year <= 2018)
+        {
+            std::cout << ">>> JetId: Using manual cut-based PUPPI jet ID for Run2 year " << gconf.year << std::endl;
+        }
+        else if (jsonPath.empty())
         {
             std::cout << ">>> WARNING: No jetid JSON available for year " << gconf.year << "; Jet_jetId/FatJet_jetId will not be computed." << std::endl;
         }
@@ -102,7 +106,7 @@ class JetSelection : public ObjectSelection
         {
             std::cout << ">>> JetId JSON: " << jsonPath << std::endl;
         }
-        jetIdEval_ = std::make_unique<JetIdEvaluator>(jsonPath);
+        jetIdEval_ = std::make_unique<JetIdEvaluator>(jsonPath, gconf.year);
 
         // AK4 jet multiplicity branches
         b_Jet_chMultiplicity_ = tree->GetBranch("Jet_chMultiplicity");
