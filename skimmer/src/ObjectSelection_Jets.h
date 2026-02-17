@@ -66,8 +66,6 @@ class JetSelection : public ObjectSelection
 
     JetSelection(Arbusto &arbusto_ref, Nano &nt_ref, HEPCLI &cli_ref, Utilities::Variables &cutflow_globals_ref) : ObjectSelection(arbusto_ref, nt_ref, cli_ref, cutflow_globals_ref)
     {
-        // Initialize correctionlib jet ID evaluator
-        jetIdEval_ = std::make_unique<JetIdEvaluator>(JET_ID_JSON_2024);
     };
 
     // DeltaR calculation
@@ -93,6 +91,19 @@ class JetSelection : public ObjectSelection
     // Initialize TTree branch addresses for NanoAODv15 variables not in NanoCORE
     void initTree(TTree *tree)
     {
+        // Initialize correctionlib jet ID evaluator using year-aware JSON path
+        std::string dsname = cli.input_tchain->GetCurrentFile()->GetName();
+        std::string jsonPath = JetIdEvaluator::getJsonPath(gconf.year, dsname);
+        if (jsonPath.empty())
+        {
+            std::cout << ">>> WARNING: No jetid JSON available for year " << gconf.year << "; Jet_jetId/FatJet_jetId will not be computed." << std::endl;
+        }
+        else
+        {
+            std::cout << ">>> JetId JSON: " << jsonPath << std::endl;
+        }
+        jetIdEval_ = std::make_unique<JetIdEvaluator>(jsonPath);
+
         // AK4 jet multiplicity branches
         b_Jet_chMultiplicity_ = tree->GetBranch("Jet_chMultiplicity");
         if (b_Jet_chMultiplicity_)
@@ -189,6 +200,8 @@ class JetSelection : public ObjectSelection
     // Compute Jet_jetId and FatJet_jetId using correctionlib and store in output branches
     void computeJetIds()
     {
+        if (!jetIdEval_ || !jetIdEval_->isInitialized()) return;
+
         // Compute AK4 Jet_jetId
         if (hasJetMultBranches_)
         {
