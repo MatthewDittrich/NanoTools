@@ -22,6 +22,14 @@ void GlobalConfig::GetConfigsFromDatasetName(std::string dsname) {
     {
         year = 2018;
     }
+    else if (dsname.find("Run2023") != std::string::npos || dsname.find("RunIII2023Summer23") != std::string::npos || dsname.find("_2023/") != std::string::npos)
+    {
+        year = 2023;
+    }
+    else if (dsname.find("Run2024") != std::string::npos || dsname.find("RunIII2024Summer24") != std::string::npos || dsname.find("_2024/") != std::string::npos)
+    {
+        year = 2024;
+    }
 
     GetConfigs();
     GetSampleType(dsname);
@@ -86,10 +94,12 @@ void GlobalConfig::GetSampleType(std::string dsname) {
 
 void GlobalConfig::GetConfigs(int in_year) {
     if (in_year > 0) year = in_year;
-    if (year < 2016 || year > 2018) {
+    if (year < 2016 || (year > 2018 && year < 2022) || year > 2024) {
         std::cout << ">>> Cannot configure for year " << year << "!! Values remain unset!" << std::endl;
         return;
     }
+    // For Run3 years, configs are not yet fully defined; skip Run2-specific setup
+    if (year >= 2022) return;
 
     if (year == 2016 && nanoAOD_ver < 0) {
         lumi = 35.922;

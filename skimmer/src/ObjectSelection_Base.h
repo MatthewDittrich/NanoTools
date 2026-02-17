@@ -18,16 +18,13 @@ typedef std::vector<unsigned int> Indices;
 class ObjectSelection
 {
   public:
-    Arbusto& arbusto;
-    Nano& nt;
-    HEPCLI& cli;
-    Utilities::Variables& globals;
+    Arbusto &arbusto;
+    Nano &nt;
+    HEPCLI &cli;
+    Utilities::Variables &globals;
 
     ObjectSelection(Arbusto &arbusto_ref, Nano &nt_ref, HEPCLI &cli_ref, Utilities::Variables &globals_ref)
-        : arbusto(arbusto_ref),
-          nt(nt_ref),
-          cli(cli_ref),
-          globals(globals_ref){
+        : arbusto(arbusto_ref), nt(nt_ref), cli(cli_ref), globals(globals_ref) {
               // Do nothing
           };
 };
