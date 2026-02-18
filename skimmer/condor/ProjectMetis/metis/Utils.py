@@ -165,7 +165,7 @@ def interruptible_sleep(n,reload_modules=[]):
         print("Sleeping for {}s.".format(n))
         time.sleep(n)
     except KeyboardInterrupt:
-        raw_input("Press Enter to force update, or Ctrl-C to quit.")
+        input("Press Enter to force update, or Ctrl-C to quit.")
         print("Force updating...")
         if reload_modules:
             print("Reloading {} modules: {}".format(

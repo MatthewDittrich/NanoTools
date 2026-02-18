@@ -68,7 +68,7 @@ if __name__ == "__main__":
         all_tasks_complete = True
 
         for analysis_tag in analysis_tags:
-            tag = "nanoaodv15_bkg_" + analysis_tag + "_11Feb2026_v2"
+            tag = "nanoaodv15_bkg_" + analysis_tag + "_18Feb2026"
             # Loop over the dataset provided by the user few lines above, and do the Metis magic
             for ds in samples:
                 task = CondorTask(
@@ -126,6 +126,6 @@ if __name__ == "__main__":
                 sys.stdout.write("\r{} mins {} seconds till updating ...".format(i/60, i%60))
                 sys.stdout.flush()
         except KeyboardInterrupt:
-            raw_input("Press Enter to force update, or Ctrl-C to quit.")
+            input("Press Enter to force update, or Ctrl-C to quit.")
             print("Force updating...")
 

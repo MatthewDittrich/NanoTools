@@ -92,7 +92,7 @@ class Optimizer(object):
             sites_per_file = []
             for infile in ins:
                 if infile.get_name() not in replica_info:
-                    print "[!] File {} for job {} not found on phedex".format(infile.get_name(),index)
+                    print("[!] File {} for job {} not found on phedex".format(infile.get_name(),index))
                 replica_sites = replica_info.get(infile.get_name(),{}).get("nodes",[])
                 sites_per_file.append(set(replica_sites))
             # the intersection of all sites per input file (i.e., sites where all inputs exist)
@@ -103,7 +103,7 @@ class Optimizer(object):
             had3failures = set([s for s,num in times_run.items() if num>=3])
 
             if len(cids) > 20:
-                print "[!] File {} for job {} has failed 20 times already at {}".format(out.get_name(),index,str(times_run))
+                print("[!] File {} for job {} has failed 20 times already at {}".format(out.get_name(),index,str(times_run)))
 
             # best list = pool of good sites where we 
             # - have not had at least 3 previous failures
