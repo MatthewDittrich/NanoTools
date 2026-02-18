@@ -39,6 +39,7 @@ if __name__ == "__main__":
     ]
 
     signal_flags = "" #"--dump_truth --is_signal" #leave "" for no flags
+    singularity_image = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel9"
 
     # Task summary for printing out msummary
     task_summary = {}
@@ -62,17 +63,17 @@ if __name__ == "__main__":
                         files_per_output = split_func(ds.get_datasetname()),
                         output_name = "output.root",
                         tag = tag,
-                        condor_submit_params = {
+                        condor_submit_params = dict({
                             #"sites": "T2_US_UCSD", #UAF
                             "use_xrootd":True,
-                            #"metis_retries": 3, does not work? 
+                            #"metis_retries": 3, does not work?
                             "classads": [
                                 ["metis_extraargs", signal_flags+" -d ./ -a "+analysis_tag+" -t Events -T Events"]
                                 ]
-                            },
+                            }, **({"container": singularity_image} if singularity_image else {})),
                         max_jobs = njobs_to_process(ds.get_datasetname()), #FIXME 
-                        cmssw_version = "CMSSW_10_2_13",
-                        scram_arch = "slc7_amd64_gcc700",
+                        cmssw_version = "CMSSW_16_0_0_pre4",
+                        scram_arch = "el9_amd64_gcc13",
                         input_executable = "{}/condor_executable_metis.sh".format(condorpath), # your condor executable here #FIXME 
                         tarfile = "{}/package.tar.xz".format(condorpath), # your tarfile with assorted goodies here
                         special_dir = "skim/{}".format(tag), # output files into /hadoop/cms/store/<user>/<special_dir>

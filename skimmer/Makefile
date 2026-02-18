@@ -46,3 +46,4 @@ clean:
 
 cleanall:
 	rm -f $(OBJECTS) $(EXE)
+	rm -f ../NanoCORE/*.o ../NanoCORE/Tools/*.o ../rapido/src/*.o
