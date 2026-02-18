@@ -123,7 +123,7 @@ if __name__ == "__main__":
         try:
             for i in reversed(range(0, 600)):
                 sleep(1) # could use a backward counter to be preeety :)
-                sys.stdout.write("\r{} mins {} seconds till updating ...".format(i/60, i%60))
+                sys.stdout.write("\r{:d} mins {} seconds till updating ...".format(i//60, i%60))
                 sys.stdout.flush()
         except KeyboardInterrupt:
             input("Press Enter to force update, or Ctrl-C to quit.")
