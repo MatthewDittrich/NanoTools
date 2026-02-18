@@ -22,6 +22,20 @@ def njobs_to_process(dsname):
 
 if __name__ == "__main__":
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--arch", choices=["el8", "el9"], default="el8",
+                        help="Target architecture: el8 (no singularity on UAF) or el9 (uses singularity)")
+    args = parser.parse_args()
+
+    if args.arch == "el9":
+        singularity_image = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel9"
+        cmssw_version = "CMSSW_16_0_0_pre4"
+        scram_arch = "el9_amd64_gcc13"
+    else:
+        singularity_image = ""
+        cmssw_version = "CMSSW_14_1_0_pre4"
+        scram_arch = "el8_amd64_gcc12"
+
     # Samples
     samples = samples.samples_to_submit
 
@@ -39,7 +53,6 @@ if __name__ == "__main__":
     ]
 
     signal_flags = "" #"--dump_truth --is_signal" #leave "" for no flags
-    singularity_image = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel9"
 
     # Task summary for printing out msummary
     task_summary = {}
@@ -72,8 +85,8 @@ if __name__ == "__main__":
                                 ]
                             }, **({"container": singularity_image} if singularity_image else {})),
                         max_jobs = njobs_to_process(ds.get_datasetname()), #FIXME 
-                        cmssw_version = "CMSSW_16_0_0_pre4",
-                        scram_arch = "el9_amd64_gcc13",
+                        cmssw_version = cmssw_version,
+                        scram_arch = scram_arch,
                         input_executable = "{}/condor_executable_metis.sh".format(condorpath), # your condor executable here #FIXME 
                         tarfile = "{}/package.tar.xz".format(condorpath), # your tarfile with assorted goodies here
                         special_dir = "skim/{}".format(tag), # output files into /hadoop/cms/store/<user>/<special_dir>
