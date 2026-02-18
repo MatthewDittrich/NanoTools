@@ -22,6 +22,20 @@ def njobs_to_process(dsname):
 
 if __name__ == "__main__":
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--arch", choices=["el8", "el9"], default="el8",
+                        help="Target architecture: el8 (no singularity on UAF) or el9 (uses singularity)")
+    args = parser.parse_args()
+
+    if args.arch == "el9":
+        singularity_image = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel9"
+        cmssw_version = "CMSSW_16_0_0_pre4"
+        scram_arch = "el9_amd64_gcc13"
+    else:
+        singularity_image = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel8"
+        cmssw_version = "CMSSW_14_1_0_pre4"
+        scram_arch = "el8_amd64_gcc12"
+
     # Samples
     samples = samples.samples_to_submit
 
@@ -54,7 +68,7 @@ if __name__ == "__main__":
         all_tasks_complete = True
 
         for analysis_tag in analysis_tags:
-            tag = "nanoaodv9_bkg_" + analysis_tag + "_16Feb2026"
+            tag = "nanoaodv15_bkg_" + analysis_tag + "_18Feb2026"
             # Loop over the dataset provided by the user few lines above, and do the Metis magic
             for ds in samples:
                 task = CondorTask(
@@ -62,17 +76,17 @@ if __name__ == "__main__":
                         files_per_output = split_func(ds.get_datasetname()),
                         output_name = "output.root",
                         tag = tag,
-                        condor_submit_params = {
+                        condor_submit_params = dict({
                             #"sites": "T2_US_UCSD", #UAF
                             "use_xrootd":True,
-                            #"metis_retries": 3, does not work? 
+                            #"metis_retries": 3, does not work?
                             "classads": [
                                 ["metis_extraargs", signal_flags+" -d ./ -a "+analysis_tag+" -t Events -T Events"]
                                 ]
-                            },
+                            }, **({"container": singularity_image} if singularity_image else {})),
                         max_jobs = njobs_to_process(ds.get_datasetname()), #FIXME 
-                        cmssw_version = "CMSSW_10_2_13",
-                        scram_arch = "slc7_amd64_gcc700",
+                        cmssw_version = cmssw_version,
+                        scram_arch = scram_arch,
                         input_executable = "{}/condor_executable_metis.sh".format(condorpath), # your condor executable here #FIXME 
                         tarfile = "{}/package.tar.xz".format(condorpath), # your tarfile with assorted goodies here
                         special_dir = "skim/{}".format(tag), # output files into /hadoop/cms/store/<user>/<special_dir>
@@ -109,9 +123,9 @@ if __name__ == "__main__":
         try:
             for i in reversed(range(0, 600)):
                 sleep(1) # could use a backward counter to be preeety :)
-                sys.stdout.write("\r{} mins {} seconds till updating ...".format(i/60, i%60))
+                sys.stdout.write("\r{:d} mins {} seconds till updating ...".format(i//60, i%60))
                 sys.stdout.flush()
         except KeyboardInterrupt:
-            raw_input("Press Enter to force update, or Ctrl-C to quit.")
+            input("Press Enter to force update, or Ctrl-C to quit.")
             print("Force updating...")
 

@@ -21,7 +21,13 @@ CXXFLAGS   += $(ROOTCFLAGS)
 CFLAGS      = $(ROOTCFLAGS) -Wall -Wno-unused-function -g -O2 -fPIC -fno-var-tracking -DLorentzVectorPtEtaPhiM4D
 #EXTRACFLAGS = -I../NanoCORE -I../rapido/src -I../NanoCORE/Tools -I${CMSSW_BASE}/../../../external/boost/1.67.0/include -I${CMSSW_BASE}/src -I../NanoTools/NanoCORE/Tools/
 BOOSTFLAGS = -I ${BOOSTDIR}/include
+ifeq ($(SCRAM_ARCH),el9_amd64_gcc13)
 CORRECTIONLIB_DIR = /cvmfs/cms.cern.ch/el9_amd64_gcc13/external/py3-correctionlib/2.7.0-65928cbe29548b423e729eb9829fee69/lib/python3.9/site-packages/correctionlib
+else ifeq ($(SCRAM_ARCH),el8_amd64_gcc12)
+CORRECTIONLIB_DIR = /cvmfs/cms.cern.ch/el8_amd64_gcc12/external/py3-correctionlib/2.5.0-ce7c6d001f4fb02448d4b37a11622e58/lib/python3.9/site-packages/correctionlib
+else
+$(error Unsupported SCRAM_ARCH=$(SCRAM_ARCH). Set up el8 or el9 environment first.)
+endif
 CORRECTIONLIB_CFLAGS = -I$(CORRECTIONLIB_DIR)/include
 CORRECTIONLIB_LIBS = -L$(CORRECTIONLIB_DIR)/lib -lcorrectionlib -Wl,-rpath,$(CORRECTIONLIB_DIR)/lib
 EXTRACFLAGS = -I../NanoCORE -I../rapido/src -I../NanoCORE/Tools -I${CMSSW_BASE}/src -I../NanoTools/NanoCORE/Tools/ $(CORRECTIONLIB_CFLAGS)
@@ -46,3 +52,4 @@ clean:
 
 cleanall:
 	rm -f $(OBJECTS) $(EXE)
+	rm -f ../NanoCORE/*.o ../NanoCORE/Tools/*.o ../rapido/src/*.o

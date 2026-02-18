@@ -596,7 +596,7 @@ class CondorTask(Task):
             d_jobs[index] = {}
             d_jobs[index]["output"] = [out.get_name(), out.get_nevents()]
             d_jobs[index]["output_exists"] = out.exists()
-            d_jobs[index]["inputs"] = map(lambda x: [x.get_name(), x.get_nevents()], ins)
+            d_jobs[index]["inputs"] = list(map(lambda x: [x.get_name(), x.get_nevents()], ins))
             submission_history = d_history.get(index, [])
             is_on_condor = False
             last_clusterid = -1

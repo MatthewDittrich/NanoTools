@@ -66,14 +66,14 @@ try:
     for i in range(0,t.GetEntries(),1):
         if t.GetEntry(i) < 0:
             foundBad = True
-            print "[RSR] found bad event %i" % i
+            print("[RSR] found bad event %i" % i)
             break
 except: foundBad = True
 
 if foundBad:
-    print "[RSR] removing output file because it does not deserve to live"
+    print("[RSR] removing output file because it does not deserve to live")
     os.system("rm ${OUTPUTNAME}.root")
-else: print "[RSR] passed the rigorous sweeproot"
+else: print("[RSR] passed the rigorous sweeproot")
 EOL
 
 echo -e "\n--- end running ---\n" #                             <----- section division

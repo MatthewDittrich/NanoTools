@@ -80,7 +80,7 @@ class Task(object):
         Back up registered (in self.info_to_backup()) variables
         """
         fname = "{0}/backup.pkl".format(self.get_taskdir())
-        with open(fname, "w") as fhout:
+        with open(fname, "wb") as fhout:
             d = {}
             nvars = 0
             for tob in self.info_to_backup():
@@ -92,13 +92,16 @@ class Task(object):
 
     def load(self):
         fname = "{0}/backup.pkl".format(self.get_taskdir())
-        if os.path.exists(fname):
-            with open(fname, "r") as fhin:
-                data = pickle.load(fhin)
-                nvars = len(data.keys())
-                for key in data:
-                    setattr(self, key, data[key])
-                self.logger.debug("Loaded backup with {0} variables from {1}".format(nvars, fname))
+        if os.path.exists(fname) and os.path.getsize(fname) > 0:
+            try:
+                with open(fname, "rb") as fhin:
+                    data = pickle.load(fhin)
+                    nvars = len(data.keys())
+                    for key in data:
+                        setattr(self, key, data[key])
+                    self.logger.debug("Loaded backup with {0} variables from {1}".format(nvars, fname))
+            except (EOFError, pickle.UnpicklingError):
+                self.logger.warning("Corrupt backup file {0}, ignoring".format(fname))
 
 
     def initialized(self):

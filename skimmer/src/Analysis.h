@@ -58,9 +58,8 @@ class Analysis
         }
         leptonTruthAna.initBranches();
 
-        // Jet ID branches (computed via correctionlib for NanoAODv15)
-        arbusto.newVecBranch<float>("Jet_jetId");
-        arbusto.newVecBranch<float>("FatJet_jetId");
+        // Jet ID branches are created conditionally in initPerTTree
+        // (only for NanoAODv15+ where the needed input branches exist)
     }
 
     // Define global variables and cutflow to be run in event loop

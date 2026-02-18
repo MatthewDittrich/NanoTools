@@ -63,6 +63,7 @@ class JetSelection : public ObjectSelection
 
     bool hasJetMultBranches_ = false;
     bool hasFatJetIdBranches_ = false;
+    bool jetIdBranchesCreated_ = false;
 
     JetSelection(Arbusto &arbusto_ref, Nano &nt_ref, HEPCLI &cli_ref, Utilities::Variables &cutflow_globals_ref) : ObjectSelection(arbusto_ref, nt_ref, cli_ref, cutflow_globals_ref)
     {
@@ -158,6 +159,20 @@ class JetSelection : public ObjectSelection
             b_FatJet_neMultiplicity_->SetAddress(FatJet_neMultiplicity_);
         }
         hasFatJetIdBranches_ = (b_FatJet_chHEF_ != nullptr && b_FatJet_neHEF_ != nullptr && b_FatJet_chEmEF_ != nullptr && b_FatJet_neEmEF_ != nullptr && b_FatJet_muEF_ != nullptr && b_FatJet_chMultiplicity_ != nullptr && b_FatJet_neMultiplicity_ != nullptr);
+
+        // Only create Jet_jetId/FatJet_jetId output branches if the input has the needed v15 branches
+        if (!jetIdBranchesCreated_ && (hasJetMultBranches_ || hasFatJetIdBranches_))
+        {
+            if (hasJetMultBranches_)
+            {
+                arbusto.newVecBranch<float>("Jet_jetId");
+            }
+            if (hasFatJetIdBranches_)
+            {
+                arbusto.newVecBranch<float>("FatJet_jetId");
+            }
+            jetIdBranchesCreated_ = true;
+        }
     }
 
     // Load the extra NanoAODv15 branches for the current entry
