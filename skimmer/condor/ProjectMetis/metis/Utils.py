@@ -353,7 +353,7 @@ def condor_submit(**kwargs): # pragma: no cover
     if queue_multiple:
         if len(kwargs["arguments"]) and (type(kwargs["arguments"][0]) not in [tuple,list]):
             raise RuntimeError("If queueing multiple jobs in one cluster_id, arguments must be a list of lists")
-        params["arguments"] = map(lambda x: " ".join(map(str,x)), kwargs["arguments"])
+        params["arguments"] = list(map(lambda x: " ".join(map(str,x)), kwargs["arguments"]))
         params["extra"] = []
         if "selection_pairs" in kwargs:
             sps = kwargs["selection_pairs"]

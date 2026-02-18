@@ -76,12 +76,21 @@ This produces the `skim` executable in `skimmer/`.
 
 ## Condor Submission
 
-Build the tarball and submit:
+**Important:** `submit.py` must be run **outside** the el9 singularity container, since `condor_submit` is not available inside it. If you are currently in a `cmssw-el9` shell, exit it first or open a new terminal.
+
+Build the tarball (inside el9) and submit (outside el9):
 
 ```bash
+# Inside el9 singularity: build the tarball
 cd skimmer/condor/
 ./maketar.sh
-python submit.py
+
+# Exit el9 singularity (or open a new terminal)
+exit
+
+# Outside el9: submit jobs
+cd skimmer/condor/
+python3 submit.py
 ```
 
 `maketar.sh` compiles, records the git state, and packages `skim`, `data/`, and `gitversion.txt` into `package.tar.xz`. The condor jobs run inside an EL9 Singularity container (`+SingularityImage` is set in `submit.py`).
