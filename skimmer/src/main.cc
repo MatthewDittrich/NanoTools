@@ -80,6 +80,10 @@ int main(int argc, char **argv)
     {
         skimmer = std::make_unique<Analysis_0Leptons_0FJ>(arbusto, nt, cli, cutflow);
     }
+    else if (cli.analysis_tag == "Sig")
+    {
+        skimmer = std::make_unique<Analysis_Sig>(arbusto, nt, cli, cutflow);
+    }
     else
     {
         throw std::runtime_error("Error: Did not recognize analysis_tag.");

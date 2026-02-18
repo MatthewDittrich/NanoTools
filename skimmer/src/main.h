@@ -3,6 +3,7 @@
 
 // Custom skimmer
 #include "Analysis.h"
+#include "Analysis_Sig.h"
 #include "Analysis_0Leptons_0FJ.h"
 #include "Analysis_0Leptons_1FJ.h"
 #include "Analysis_0Leptons_2FJ.h"
