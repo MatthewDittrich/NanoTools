@@ -8,7 +8,7 @@ All compilation and local running must be done inside the `cmssw-el9` Singularit
 ## Enter the EL9 Environment
 
 ```bash
-/cvmfs/cms.cern.ch/common/cmssw-el9
+/cvmfs/cms.cern.ch/common/cmssw-el9 -B/ceph
 ```
 
 This drops you into an EL9 shell. From there, set up CMSSW:
