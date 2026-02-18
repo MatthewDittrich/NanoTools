@@ -32,7 +32,7 @@ if __name__ == "__main__":
         cmssw_version = "CMSSW_16_0_0_pre4"
         scram_arch = "el9_amd64_gcc13"
     else:
-        singularity_image = ""
+        singularity_image = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel8"
         cmssw_version = "CMSSW_14_1_0_pre4"
         scram_arch = "el8_amd64_gcc12"
 
