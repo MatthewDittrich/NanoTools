@@ -1,10 +1,26 @@
 #!/bin/bash
 
+# Usage: source setup.sh [el8|el9]
+# Default: el8
+
+ARCH=${1:-el8}
+
 [ ! -z "$CMSSW_BASE" ] || {
     [ -e /cvmfs/ ] && {
         source /cvmfs/cms.cern.ch/cmsset_default.sh
-        cd /cvmfs/cms.cern.ch/slc6_amd64_gcc630/cms/cmssw/CMSSW_9_4_9/ && eval `scramv1 runtime -sh` && cd -
-        # source /cvmfs/cms.cern.ch/crab3/crab.sh
+
+        if [ "$ARCH" == "el8" ]; then
+            export SCRAM_ARCH=el8_amd64_gcc12
+            export CMSSW_VERSION=CMSSW_14_1_0_pre4
+        elif [ "$ARCH" == "el9" ]; then
+            export SCRAM_ARCH=el9_amd64_gcc13
+            export CMSSW_VERSION=CMSSW_16_0_0_pre4
+        else
+            echo "Unknown architecture: $ARCH (use el8 or el9)"
+            return 1
+        fi
+
+        cd /cvmfs/cms.cern.ch/$SCRAM_ARCH/cms/cmssw/$CMSSW_VERSION/src && eval `scramv1 runtime -sh` && cd -
     }
 }
 
