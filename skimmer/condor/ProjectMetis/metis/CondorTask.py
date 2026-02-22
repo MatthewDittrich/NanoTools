@@ -80,7 +80,7 @@ class CondorTask(Task):
             hadoop_user = os.environ.get("GRIDUSER","").strip()  # NOTE, might be different for some weird folks
             if not hadoop_user: hadoop_user = os.environ.get("USER") # fallback
             self.outdir_name = kwargs.get("outdir_name", self.sample.get_datasetname().replace("/", "_").lstrip("_"))
-            self.output_dir = kwargs.get("output_dir", "/ceph/cms/store/user/{0}/{1}/{2}_{3}/".format(hadoop_user, special_dir, self.outdir_name, self.tag))
+            self.output_dir = kwargs.get("output_dir", "/ceph/cms/store/user/{0}/{1}/{2}/".format(hadoop_user, special_dir, self.outdir_name))
             if self.use_hadoop:
                 self.output_dir = kwargs.get("output_dir", "/hadoop/cms/store/user/{0}/{1}/{2}_{3}/".format(hadoop_user, special_dir, self.outdir_name, self.tag))
 

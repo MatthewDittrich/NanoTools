@@ -1,6 +1,7 @@
 import os
 
 from metis.Sample import DBSSample
+from metis.Sample import DirectorySample
 from metis.LocalMergeTask import LocalMergeTask
 from metis.CondorTask import CondorTask
 from metis.StatsParser import StatsParser
@@ -41,15 +42,16 @@ if __name__ == "__main__":
 
     # submission tag
     analysis_tags = [
-#        "4Lep",
+#        "Sig",
+        "4Lep",
         "3Lep",
-#        "2Lep2FJ",
-#        "2Lep1FJ",
-#        "1Lep1FJ",
-#        "0Lep3FJ",
-#        "0Lep2FJ",
-#        "0Lep1FJ",
-#        "0Lep0FJ"
+        "2Lep2FJ",
+        "2Lep1FJ",
+        "1Lep1FJ",
+        "0Lep3FJ",
+        "0Lep2FJ",
+        "0Lep1FJ",
+        "0Lep0FJ"
     ]
 
     signal_flags = "" #"--dump_truth --is_signal" #leave "" for no flags
@@ -68,7 +70,7 @@ if __name__ == "__main__":
         all_tasks_complete = True
 
         for analysis_tag in analysis_tags:
-            tag = "nanoaodv15_bkg_" + analysis_tag + "_18Feb2026"
+            tag = "nanoaodv15_" + analysis_tag + "_21Feb2026_V1"
             # Loop over the dataset provided by the user few lines above, and do the Metis magic
             for ds in samples:
                 task = CondorTask(
@@ -78,7 +80,7 @@ if __name__ == "__main__":
                         tag = tag,
                         condor_submit_params = dict({
                             #"sites": "T2_US_UCSD", #UAF
-                            "use_xrootd":True,
+                            #"use_xrootd":True,
                             #"metis_retries": 3, does not work?
                             "classads": [
                                 ["metis_extraargs", signal_flags+" -d ./ -a "+analysis_tag+" -t Events -T Events"]
@@ -89,7 +91,7 @@ if __name__ == "__main__":
                         scram_arch = scram_arch,
                         input_executable = "{}/condor_executable_metis.sh".format(condorpath), # your condor executable here #FIXME 
                         tarfile = "{}/package.tar.xz".format(condorpath), # your tarfile with assorted goodies here
-                        special_dir = "skim/{}".format(tag), # output files into /hadoop/cms/store/<user>/<special_dir>
+                        special_dir = "VVH_Skims/{}".format(tag), # output files into /hadoop/cms/store/<user>/<special_dir>
                         min_completion_fraction = 0.50 if skip_tail else 1.0,
                 )
                 # Straightforward logic
@@ -106,7 +108,7 @@ if __name__ == "__main__":
         ##########
         # Parse the summary and make a summary.txt that will be used to pretty status of the jobs
         os.system("rm web_summary.json")
-        webdir="~/public_html/skim_3Ltruth"
+        webdir="~/public_html/skim_SIG_RUN2_V15"
         StatsParser(data=task_summary, webdir=webdir).do()
         os.system("chmod -R 755 {}".format(webdir))
         os.system("msummary -r -i {}/web_summary.json".format(webdir))
