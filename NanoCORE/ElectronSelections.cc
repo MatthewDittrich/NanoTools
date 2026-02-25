@@ -487,6 +487,12 @@ bool VVH::electronID(int idx, VVH::IDLevel id_level, int year) {
     case (2022):
         return VVH::electron2022ID(idx, id_level);
         break;
+    case (2023):
+        return VVH::electron2023ID(idx, id_level);
+        break;
+    case (2024):
+        return VVH::electron2024ID(idx, id_level);
+        break;
     default:
         throw std::runtime_error("ElectronSelections.cc: ERROR - invalid year");
         return false;
@@ -521,6 +527,24 @@ bool VVH::electron2018ID(int idx, VVH::IDLevel id_level) {
     return true;
 }
 bool VVH::electron2022ID(int idx, VVH::IDLevel id_level) {
+    if (not (Electron_pt().at(idx)               >      10.  )) return false;
+    if (not (fabs(Electron_eta().at(idx))        <      2.5 )) return false;
+    if (not (fabs(Electron_dxy().at(idx))        <      0.05 )) return false;
+    if (not (fabs(Electron_dz().at(idx))         <      0.1  )) return false;
+    if (not (fabs(Electron_sip3d().at(idx))      <      8    )) return false;
+    if (not (Electron_pfRelIso03_all().at(idx)   <      0.40 )) return false;
+    return true;
+}
+bool VVH::electron2023ID(int idx, VVH::IDLevel id_level) {
+    if (not (Electron_pt().at(idx)               >      10.  )) return false;
+    if (not (fabs(Electron_eta().at(idx))        <      2.5 )) return false;
+    if (not (fabs(Electron_dxy().at(idx))        <      0.05 )) return false;
+    if (not (fabs(Electron_dz().at(idx))         <      0.1  )) return false;
+    if (not (fabs(Electron_sip3d().at(idx))      <      8    )) return false;
+    if (not (Electron_pfRelIso03_all().at(idx)   <      0.40 )) return false;
+    return true;
+}
+bool VVH::electron2024ID(int idx, VVH::IDLevel id_level) {
     if (not (Electron_pt().at(idx)               >      10.  )) return false;
     if (not (fabs(Electron_eta().at(idx))        <      2.5 )) return false;
     if (not (fabs(Electron_dxy().at(idx))        <      0.05 )) return false;

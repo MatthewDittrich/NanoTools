@@ -300,3 +300,21 @@ bool VVH::muon2022ID(unsigned int idx, VVH::IDLevel id_level) {
     if (not (Muon_pfRelIso03_all().at(idx)   <  0.40 )) return false;
     return true;
 }
+bool VVH::muon2023ID(unsigned int idx, VVH::IDLevel id_level) {
+    if (not (Muon_pt().at(idx)               >  10.  )) return false;
+    if (not (fabs(Muon_eta().at(idx))        <  2.4  )) return false;
+    if (not (fabs(Muon_dxy().at(idx))        <  0.05 )) return false;
+    if (not (fabs(Muon_dz().at(idx))         <  0.1  )) return false;
+    if (not (fabs(Muon_sip3d().at(idx))      <  8    )) return false;
+    if (not (Muon_pfRelIso03_all().at(idx)   <  0.40 )) return false;
+    return true;
+}
+bool VVH::muon2024ID(unsigned int idx, VVH::IDLevel id_level) {
+    if (not (Muon_pt().at(idx)               >  10.  )) return false;
+    if (not (fabs(Muon_eta().at(idx))        <  2.4  )) return false;
+    if (not (fabs(Muon_dxy().at(idx))        <  0.05 )) return false;
+    if (not (fabs(Muon_dz().at(idx))         <  0.1  )) return false;
+    if (not (fabs(Muon_sip3d().at(idx))      <  8    )) return false;
+    if (not (Muon_pfRelIso03_all().at(idx)   <  0.40 )) return false;
+    return true;
+}

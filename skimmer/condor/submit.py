@@ -16,7 +16,7 @@ condorpath = os.path.dirname(os.path.realpath(__file__))
 # Avoid spamming too many short jobs to condor
 # Less dileptn pairs = faster = more input files per job
 def split_func(dsname):
-    return 1
+    return 2
 
 def njobs_to_process(dsname):
     return -1
@@ -70,7 +70,7 @@ if __name__ == "__main__":
         all_tasks_complete = True
 
         for analysis_tag in analysis_tags:
-            tag = "nanoaodv15_" + analysis_tag + "_21Feb2026_V1"
+            tag = "nanoaodv15_r2data_" + analysis_tag + "_25Feb2026_v1"
             # Loop over the dataset provided by the user few lines above, and do the Metis magic
             for ds in samples:
                 task = CondorTask(
@@ -80,7 +80,7 @@ if __name__ == "__main__":
                         tag = tag,
                         condor_submit_params = dict({
                             #"sites": "T2_US_UCSD", #UAF
-                            #"use_xrootd":True,
+                            "use_xrootd":True,
                             #"metis_retries": 3, does not work?
                             "classads": [
                                 ["metis_extraargs", signal_flags+" -d ./ -a "+analysis_tag+" -t Events -T Events"]
@@ -107,11 +107,23 @@ if __name__ == "__main__":
 
         ##########
         # Parse the summary and make a summary.txt that will be used to pretty status of the jobs
-        os.system("rm web_summary.json")
-        webdir="~/public_html/skim_SIG_RUN2_V15"
+        #os.system("rm web_summary_r2bkg.json")
+        #os.system("rm web_summary_r3bkg.json")
+        os.system("rm web_summary_r2data.json")
+        #os.system("rm web_summary_r3data.json")
+        #os.system("rm web_summary_sig.json")
+        #webdir="~/public_html/skim_r2bkg"
+        #webdir="~/public_html/skim_r3bkg"
+        webdir="~/public_html/skim_r2data"
+        #webdir="~/public_html/skim_r3data"
+        #webdir="~/public_html/skim_r2sig"
         StatsParser(data=task_summary, webdir=webdir).do()
         os.system("chmod -R 755 {}".format(webdir))
-        os.system("msummary -r -i {}/web_summary.json".format(webdir))
+        #os.system("msummary -r -i {}/web_summary_r2bkg.json".format(webdir))
+        #os.system("msummary -r -i {}/web_summary_r3nkg.json".format(webdir))
+        os.system("msummary -r -i {}/web_summary_r2data.json".format(webdir))
+        #os.system("msummary -r -i {}/web_summary_r3data.json".format(webdir))
+        #os.system("msummary -r -i {}/web_summary_sig.json".format(webdir))
 
         # If all done exit the loop
         if all_tasks_complete:

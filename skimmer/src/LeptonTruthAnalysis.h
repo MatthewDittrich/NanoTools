@@ -43,7 +43,7 @@ struct LeptonTruthAnalysis
         for (unsigned int muon_i = 0; muon_i < nt.nMuon(); muon_i++)
         {
             int provenance = 0;
-            if (!cli.is_data)
+            if (!nt.isData())
             {
                 provenance = getProvenance(nt.Muon_pdgId()[muon_i], nt.Muon_genPartIdx()[muon_i]);
             }
@@ -54,7 +54,7 @@ struct LeptonTruthAnalysis
         for (unsigned int elec_i = 0; elec_i < nt.nElectron(); elec_i++)
         {
             int provenance = 0;
-            if (!cli.is_data)
+            if (!nt.isData())
             {
                 provenance = getProvenance(nt.Electron_pdgId()[elec_i], nt.Electron_genPartIdx()[elec_i]);
             }

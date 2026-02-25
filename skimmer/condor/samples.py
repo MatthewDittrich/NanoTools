@@ -1,5 +1,5 @@
 from metis.Sample import DirectorySample, DBSSample
-from vbsvvh_data import nanoaodv9_data, nanoaodv15_data
+from vbsvvh_data import nanoaodv9_data, nanoaodv15_run3_data, nanoaodv15_run2_data
 from vbsvvh_mc import nanoaodv9_bkg, nanoaodv9_test, nanoaodv15_run2_bkg,nanoaodv9_sig
 
 
@@ -9,9 +9,11 @@ from vbsvvh_mc import nanoaodv9_bkg, nanoaodv9_test, nanoaodv15_run2_bkg,nanoaod
 samples_to_submit = []
 
 #samples_to_submit += nanoaodv9_bkg
-samples_to_submit += nanoaodv9_sig
+#samples_to_submit += nanoaodv9_sig
 #samples_to_submit += nanoaodv9_data
-#samples_to_submit += nanoaodv15_data
+
+samples_to_submit += nanoaodv15_run2_data
+#samples_to_submit += nanoaodv15_run3_data
 #samples_to_submit += nanoaodv15_run2_bkg
 
 print(samples_to_submit)

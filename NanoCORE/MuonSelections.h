@@ -31,6 +31,8 @@ namespace VVH {
     bool muon2017ID(unsigned int idx, VVH::IDLevel id_level);
     bool muon2018ID(unsigned int idx, VVH::IDLevel id_level);
     bool muon2022ID(unsigned int idx, VVH::IDLevel id_level);
+    bool muon2023ID(unsigned int idx, VVH::IDLevel id_level);
+    bool muon2024ID(unsigned int idx, VVH::IDLevel id_level);
 }
 
 #endif

@@ -48,6 +48,8 @@ namespace VVH {
     bool electron2017ID(int idx, VVH::IDLevel id_level);
     bool electron2018ID(int idx, VVH::IDLevel id_level);
     bool electron2022ID(int idx, VVH::IDLevel id_level);
+    bool electron2023ID(int idx, VVH::IDLevel id_level);
+    bool electron2024ID(int idx, VVH::IDLevel id_level);
 }
 
 #endif

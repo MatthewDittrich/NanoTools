@@ -110,24 +110,24 @@ class Analysis
         lumis->Add(lumitree);
 
         // Load golden JSON files
-        if (nt.isData())
-        {
-            switch (nt.year())
-            {
-            case 2016:
-                set_goodrun_file("data/golden_jsons/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON_formatted.txt");
-                break;
-            case 2017:
-                set_goodrun_file("data/golden_jsons/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON_formatted.txt");
-                break;
-            case 2018:
-                set_goodrun_file("data/golden_jsons/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON_formatted.txt");
-                break;
-            default:
-                throw std::runtime_error("Core::Analysis - invalid year or none set");
-                break;
-            }
-        }
+//        if (nt.isData())
+//        {
+//            switch (nt.year())
+//            {
+//            case 2016:
+//                set_goodrun_file("data/golden_jsons/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON_formatted.txt");
+//                break;
+//            case 2017:
+//                set_goodrun_file("data/golden_jsons/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON_formatted.txt");
+//                break;
+//            case 2018:
+//                set_goodrun_file("data/golden_jsons/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON_formatted.txt");
+//                break;
+//            default:
+//                throw std::runtime_error("Core::Analysis - invalid year or none set");
+//                break;
+//            }
+//        }
 
         // Set config (e.g. year, isAPV)
         TString file_name = cli.input_tchain->GetCurrentFile()->GetName();
