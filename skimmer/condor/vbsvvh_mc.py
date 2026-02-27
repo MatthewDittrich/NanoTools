@@ -1145,25 +1145,69 @@ nanoaodv15_run2_bkg = [
 ]
 
 
-nanoaodv9_sig = [
-    DirectorySample(
-        dataset="/Test",
-        location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOGEN/",
-        globber="merged.root"
-    ),
-#    DirectorySample(dataset="/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOGEN/",location=sig_location,globber="*.root"),
-#    DirectorySample(dataset="/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOGEN/",location=sig_location,globber="*.root"),
-#    DirectorySample(dataset="/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOGEN/",location=sig_location,globber="*.root"),
-#    DirectorySample(dataset="/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOGEN/",location=sig_location,globber="*.root"),
-#    DirectorySample(dataset="/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOGEN/",location=sig_location,globber="*.root"),
-#    DirectorySample(dataset="/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOGEN/",location=sig_location,globber="*.root"),
-#    DirectorySample(dataset="/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOGEN/",location=sig_location,globber="*.root"),
-#    DirectorySample(dataset="/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOGEN/",location=sig_location,globber="*.root"),
-#    DirectorySample(dataset="/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOGEN/",location=sig_location,globber="*.root"),
-#    DirectorySample(dataset="/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOGEN/",location=sig_location,globber="*.root"),
-#    DirectorySample(dataset="/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOGEN/",location=sig_location,globber="*.root"),
-#    DirectorySample(dataset="/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOGEN/",location=sig_location,globber="*.root"),
-#    DirectorySample(dataset="/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOGEN/",location=sig_location,globber="*.root"),
-#    DirectorySample(dataset="/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOGEN/",location=sig_location,globber="*.root"),
-#    DirectorySample(dataset="/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOGEN/",location=sig_location,globber="*.root"),
+nanoaodv15_run2_sig = [
+
+    # c2v=1.0, c3=1.0 -- VBSWWH_OS
+    DirectorySample(dataset="VBSWWH_OS_c2v1p0_c3_1p0_UL16APV", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_OS_c2v1p0_c3_1p0_UL16", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_OS_c2v1p0_c3_1p0_UL17", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_OS_c2v1p0_c3_1p0_UL18", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOv15", globber="*.root", use_xrootd=True),
+    # c2v=1.0, c3=1.0 -- VBSWWH_SS
+    DirectorySample(dataset="VBSWWH_SS_c2v1p0_c3_1p0_UL16APV", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_SS_c2v1p0_c3_1p0_UL16", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_SS_c2v1p0_c3_1p0_UL17", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_SS_c2v1p0_c3_1p0_UL18", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOv15", globber="*.root", use_xrootd=True),
+    # c2v=1.0, c3=1.0 -- VBSWZH
+    DirectorySample(dataset="VBSWZH_c2v1p0_c3_1p0_UL16APV", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWZH_c2v1p0_c3_1p0_UL16", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWZH_c2v1p0_c3_1p0_UL17", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWZH_c2v1p0_c3_1p0_UL18", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOv15", globber="*.root", use_xrootd=True),
+    # c2v=1.0, c3=1.0 -- VBSZZH
+    DirectorySample(dataset="VBSZZH_c2v1p0_c3_1p0_UL16APV", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSZZH_c2v1p0_c3_1p0_UL16", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSZZH_c2v1p0_c3_1p0_UL17", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSZZH_c2v1p0_c3_1p0_UL18", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOv15", globber="*.root", use_xrootd=True),
+
+    # c2v=1.5, c3=1.0 -- VBSWWH_OS
+    DirectorySample(dataset="VBSWWH_OS_c2v1p5_c3_1p0_UL16APV", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_OS_c2v1p5_c3_1p0_UL16", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_OS_c2v1p5_c3_1p0_UL17", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_OS_c2v1p5_c3_1p0_UL18", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOv15", globber="*.root", use_xrootd=True),
+    # c2v=1.5, c3=1.0 -- VBSWWH_SS
+    DirectorySample(dataset="VBSWWH_SS_c2v1p5_c3_1p0_UL16APV", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_SS_c2v1p5_c3_1p0_UL16", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_SS_c2v1p5_c3_1p0_UL17", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_SS_c2v1p5_c3_1p0_UL18", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOv15", globber="*.root", use_xrootd=True),
+    # c2v=1.5, c3=1.0 -- VBSWZH
+    DirectorySample(dataset="VBSWZH_c2v1p5_c3_1p0_UL16APV", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWZH_c2v1p5_c3_1p0_UL16", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWZH_c2v1p5_c3_1p0_UL17", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWZH_c2v1p5_c3_1p0_UL18", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOv15", globber="*.root", use_xrootd=True),
+    # c2v=1.5, c3=1.0 -- VBSZZH
+    DirectorySample(dataset="VBSZZH_c2v1p5_c3_1p0_UL16APV", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSZZH_c2v1p5_c3_1p0_UL16", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSZZH_c2v1p5_c3_1p0_UL17", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSZZH_c2v1p5_c3_1p0_UL18", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p5_c3_1p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOv15", globber="*.root", use_xrootd=True),
+
+    # c2v=1.0, c3=10.0 -- VBSWWH_OS
+    DirectorySample(dataset="VBSWWH_OS_c2v1p0_c3_10p0_UL16APV", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_OS_c2v1p0_c3_10p0_UL16", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_OS_c2v1p0_c3_10p0_UL17", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_OS_c2v1p0_c3_10p0_UL18", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_OS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOv15", globber="*.root", use_xrootd=True),
+    # c2v=1.0, c3=10.0 -- VBSWWH_SS
+    DirectorySample(dataset="VBSWWH_SS_c2v1p0_c3_10p0_UL16APV", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_SS_c2v1p0_c3_10p0_UL16", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_SS_c2v1p0_c3_10p0_UL17", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWWH_SS_c2v1p0_c3_10p0_UL18", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWWH_SS_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOv15", globber="*.root", use_xrootd=True),
+    # c2v=1.0, c3=10.0 -- VBSWZH
+    DirectorySample(dataset="VBSWZH_c2v1p0_c3_10p0_UL16APV", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWZH_c2v1p0_c3_10p0_UL16", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWZH_c2v1p0_c3_10p0_UL17", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSWZH_c2v1p0_c3_10p0_UL18", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSWZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOv15", globber="*.root", use_xrootd=True),
+    # c2v=1.0, c3=10.0 -- VBSZZH
+    DirectorySample(dataset="VBSZZH_c2v1p0_c3_10p0_UL16APV", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16APV_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSZZH_c2v1p0_c3_10p0_UL16", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL16_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSZZH_c2v1p0_c3_10p0_UL17", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL17_NANOv15", globber="*.root", use_xrootd=True),
+    DirectorySample(dataset="VBSZZH_c2v1p0_c3_10p0_UL18", location="/ceph/cms/store/user/mmazza/SignalGeneration/VBSVVH_VBSCuts_13TeV_4f_LO_MG_2_9_18_c2v_1p0_c3_10p0_c2Vc3scan_slc7_amd64_gcc10_CMSSW_12_4_8/VBSZZH_VBSCuts_13TeV_TuneCP5_RunIISummer20UL18_NANOv15", globber="*.root", use_xrootd=True),
+
 ]

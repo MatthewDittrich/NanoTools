@@ -158,7 +158,7 @@ fi
 
 # Rigorous sweeproot which checks ALL branches for ALL events.
 # If GetEntry() returns -1, then there was an I/O problem, so we will delete it
-python << EOL
+python3 << EOL
 import ROOT as r
 import os
 foundBad = False

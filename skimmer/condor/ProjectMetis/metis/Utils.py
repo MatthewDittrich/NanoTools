@@ -497,7 +497,7 @@ def make_tarball(fname, **kwargs): # pragma: no cover
 def update_dashboard(webdir=None, jsonfile=None): # pragma: no cover
     if not webdir:
         raise Exception("Um, we need a web directory, dude.")
-    if not os.path.exists(os.path.expanduser(webdir)):
+    if not os.path.exists(os.path.expanduser(webdir)) or (not os.path.exists(os.path.join(webdir, "index.html"))):
         mb = metis_base()
         do_cmd("mkdir -p {}/plots/".format(webdir), dryRun=False)
         do_cmd("cp -rp {}/dashboard/* {}/".format(mb,webdir), dryRun=False)

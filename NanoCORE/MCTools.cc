@@ -305,16 +305,15 @@ int dumpDocLines()
 }
 
 bool isFromSUSY(int id, int idx) {
-    vector<GenPart> genParticles = get_GenParticles();
     int mc_id = 0, mc_motherid = 0, mc_motheridx = -1, mc_grandmaid = 0;
     if (abs(id) == 11 || abs(id) == 13) {
-        mc_id = genParticles[idx].pdg_id;
-        mc_motheridx = genParticles[idx].mother_idx;
+        mc_id = GenPart_pdgId().at(idx);
+        mc_motheridx = GenPart_genPartIdxMother().at(idx);
         if (mc_motheridx >= 0)
-            mc_motherid = genParticles[mc_motheridx].pdg_id;
+            mc_motherid = GenPart_pdgId().at(mc_motheridx);
     }
-    if (mc_motheridx >= 0 && genParticles[mc_motheridx].mother_idx >= 0)
-        mc_grandmaid = genParticles[genParticles[mc_motheridx].mother_idx].pdg_id;
+    if (mc_motheridx >= 0 && GenPart_genPartIdxMother().at(mc_motheridx) >= 0)
+        mc_grandmaid = GenPart_pdgId().at(GenPart_genPartIdxMother().at(mc_motheridx));
 
     // For Leptons
     if ((abs(mc_id) == 11 || abs(mc_id) == 13)) {
@@ -326,16 +325,15 @@ bool isFromSUSY(int id, int idx) {
 }
 
 bool isFromW(int id, int idx) {
-    vector<GenPart> genParticles = get_GenParticles();
     int mc_id = 0, mc_motherid = 0, mc_motheridx = -1, mc_grandmaid = 0;
     if (abs(id) == 11 || abs(id) == 13) {
-        mc_id = genParticles[idx].pdg_id;
-        mc_motheridx = genParticles[idx].mother_idx;
+        mc_id = GenPart_pdgId().at(idx);
+        mc_motheridx = GenPart_genPartIdxMother().at(idx);
         if (mc_motheridx >= 0)
-            mc_motherid = genParticles[mc_motheridx].pdg_id;
+            mc_motherid = GenPart_pdgId().at(mc_motheridx);
     }
-    if (mc_motheridx >= 0 && genParticles[mc_motheridx].mother_idx >= 0)
-        mc_grandmaid = genParticles[genParticles[mc_motheridx].mother_idx].pdg_id;
+    if (mc_motheridx >= 0 && GenPart_genPartIdxMother().at(mc_motheridx) >= 0)
+        mc_grandmaid = GenPart_pdgId().at(GenPart_genPartIdxMother().at(mc_motheridx));
 
     // For Leptons
     if ((abs(mc_id) == 11 || abs(mc_id) == 13)) {
@@ -354,16 +352,15 @@ bool isFromW(int id, int idx) {
 }
 
 bool isFromZ(int id, int idx) {
-    vector<GenPart> genParticles = get_GenParticles();
     int mc_id = 0, mc_motherid = 0, mc_motheridx = -1, mc_grandmaid = 0;
     if (abs(id) == 11 || abs(id) == 13) {
-        mc_id = genParticles[idx].pdg_id;
-        mc_motheridx = genParticles[idx].mother_idx;
+        mc_id = GenPart_pdgId().at(idx);
+        mc_motheridx = GenPart_genPartIdxMother().at(idx);
         if (mc_motheridx >= 0)
-            mc_motherid = genParticles[mc_motheridx].pdg_id;
+            mc_motherid = GenPart_pdgId().at(mc_motheridx);
     }
-    if (mc_motheridx >= 0 && genParticles[mc_motheridx].mother_idx >= 0)
-        mc_grandmaid = genParticles[genParticles[mc_motheridx].mother_idx].pdg_id;
+    if (mc_motheridx >= 0 && GenPart_genPartIdxMother().at(mc_motheridx) >= 0)
+        mc_grandmaid = GenPart_pdgId().at(GenPart_genPartIdxMother().at(mc_motheridx));
 
     // For Leptons
     if ((abs(mc_id) == 11 || abs(mc_id) == 13)) {
@@ -384,16 +381,15 @@ bool isFromZ(int id, int idx) {
 }
 
 bool isFromTau(int id, int idx) {
-    vector<GenPart> genParticles = get_GenParticles();
     int mc_id = 0, mc_motherid = 0, mc_motheridx = -1, mc_grandmaid = 0;
     if (abs(id) == 11 || abs(id) == 13) {
-        mc_id = genParticles[idx].pdg_id;
-        mc_motheridx = genParticles[idx].mother_idx;
+        mc_id = GenPart_pdgId().at(idx);
+        mc_motheridx = GenPart_genPartIdxMother().at(idx);
         if (mc_motheridx >= 0)
-            mc_motherid = genParticles[mc_motheridx].pdg_id;
+            mc_motherid = GenPart_pdgId().at(mc_motheridx);
     }
-    if (mc_motheridx >= 0 && genParticles[mc_motheridx].mother_idx >= 0)
-        mc_grandmaid = genParticles[genParticles[mc_motheridx].mother_idx].pdg_id;
+    if (mc_motheridx >= 0 && GenPart_genPartIdxMother().at(mc_motheridx) >= 0)
+        mc_grandmaid = GenPart_pdgId().at(GenPart_genPartIdxMother().at(mc_motheridx));
 
     // For Leptons
     if ((abs(mc_id) == 11 || abs(mc_id) == 13)) {
@@ -407,37 +403,34 @@ bool isFromTau(int id, int idx) {
 }
 
 bool isFromB(int id, int idx) {
-    vector<GenPart> genParticles = get_GenParticles();
     int mc_id = 0, mc_motherid = 0;
     if (abs(id) == 11 || abs(id) == 13) {
-        mc_id = genParticles[idx].pdg_id;
-        int mc_motheridx = genParticles[idx].mother_idx;
+        mc_id = GenPart_pdgId().at(idx);
+        int mc_motheridx = GenPart_genPartIdxMother().at(idx);
         if (mc_motheridx >= 0)
-            mc_motherid = genParticles[mc_motheridx].pdg_id;
+            mc_motherid = GenPart_pdgId().at(mc_motheridx);
     }
     return (abs(mc_id) == 11 || abs(mc_id) == 13) && idIsBeauty(mc_motherid);
 }
 
 bool isFromC(int id, int idx) {
-    vector<GenPart> genParticles = get_GenParticles();
     int mc_id = 0, mc_motherid = 0;
     if (abs(id) == 11 || abs(id) == 13) {
-        mc_id = genParticles[idx].pdg_id;
-        int mc_motheridx = genParticles[idx].mother_idx;
+        mc_id = GenPart_pdgId().at(idx);
+        int mc_motheridx = GenPart_genPartIdxMother().at(idx);
         if (mc_motheridx >= 0)
-            mc_motherid = genParticles[mc_motheridx].pdg_id;
+            mc_motherid = GenPart_pdgId().at(mc_motheridx);
     }
     return (abs(mc_id) == 11 || abs(mc_id) == 13) && idIsCharm(mc_motherid);
 }
 
 bool isFromLight(int id, int idx) {
-    vector<GenPart> genParticles = get_GenParticles();
     int mc_id = 0, mc_motherid = 0;
     if (abs(id) == 11 || abs(id) == 13) {
-        mc_id = genParticles[idx].pdg_id;
-        int mc_motheridx = genParticles[idx].mother_idx;
+        mc_id = GenPart_pdgId().at(idx);
+        int mc_motheridx = GenPart_genPartIdxMother().at(idx);
         if (mc_motheridx >= 0)
-            mc_motherid = genParticles[mc_motheridx].pdg_id;
+            mc_motherid = GenPart_pdgId().at(mc_motheridx);
     }
     if (abs(mc_id) != 11 && abs(mc_id) != 13) {return false;}
     if (abs(mc_motherid) > 200 && abs(mc_motherid) < 400) {return true;}
@@ -446,13 +439,12 @@ bool isFromLight(int id, int idx) {
 }
 
 bool isFromLightFake(int id, int idx) {
-    vector<GenPart> genParticles = get_GenParticles();
     int mc_id = 0, mc_motherid = 0;
     if (abs(id) == 11 || abs(id) == 13) {
-        mc_id = genParticles[idx].pdg_id;
-        int mc_motheridx = genParticles[idx].mother_idx;
+        mc_id = GenPart_pdgId().at(idx);
+        int mc_motheridx = GenPart_genPartIdxMother().at(idx);
         if (mc_motheridx >= 0)
-            mc_motherid = genParticles[mc_motheridx].pdg_id;
+            mc_motherid = GenPart_pdgId().at(mc_motheridx);
     }
     // True if light hadron
     if (abs(mc_id) > 200 && abs(mc_id) < 400) {return true;}
@@ -627,16 +619,15 @@ int getSourceId(int genpIdx) {
     // terminate search if top or H is found
     // continue if W, Z is found, to see if there's a top or H
     // can also add SUSY particles to logic, not yet done
-    vector<GenPart> genParticles = get_GenParticles();
     int currentIdx = genpIdx;
-    int motherIdx = genParticles[currentIdx].mother_idx;
-    int motherId = genParticles[motherIdx].pdg_id;
+    int motherIdx = GenPart_genPartIdxMother().at(currentIdx);
+    int motherId = GenPart_pdgId().at(motherIdx);
     int sourceId = -1;
     if (useSourceId(motherId)) sourceId = motherId;
     while ((currentIdx >= 0) && (motherIdx >= 0) && !terminateSourceId(sourceId) && !terminateMotherId(motherId)) {
         currentIdx = motherIdx;
-        motherIdx = genParticles[currentIdx].mother_idx;
-        motherId = abs(genParticles[currentIdx].pdg_id);
+        motherIdx = GenPart_genPartIdxMother().at(currentIdx);
+        motherId = abs(GenPart_pdgId().at(currentIdx));
         if (useSourceId(motherId)) sourceId = motherId;
     }
     return sourceId;
