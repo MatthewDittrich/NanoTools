@@ -22,6 +22,10 @@ void GlobalConfig::GetConfigsFromDatasetName(std::string dsname) {
     {
         year = 2018;
     }
+    else if (dsname.find("Run2022") != std::string::npos)
+    {
+        year = 2022;
+    }
     else if (dsname.find("Run2023") != std::string::npos || dsname.find("RunIII2023Summer23") != std::string::npos || dsname.find("_2023/") != std::string::npos)
     {
         year = 2023;
