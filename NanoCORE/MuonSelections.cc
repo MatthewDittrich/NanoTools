@@ -258,6 +258,12 @@ bool VVH::muonID(int idx, VVH::IDLevel id_level, int year) {
     case (2022):
         return VVH::muon2022ID(idx, id_level);
         break;
+    case (2023):
+        return VVH::muon2022ID(idx, id_level);
+        break;
+    case (2024):
+        return VVH::muon2022ID(idx, id_level);
+        break;
     default:
         throw std::runtime_error("MuonSelections.cc: ERROR - invalid year");
         return false;

@@ -192,6 +192,7 @@ nanoaodv15_run2_data = [
     DBSSample(dataset="/MET/Run2018A-UL2018_NanoAODv15-v2/NANOAOD"),
     DBSSample(dataset="/MET/Run2018B-UL2018_NanoAODv15-v2/NANOAOD"),
     DBSSample(dataset="/MET/Run2018C-UL2018_NanoAODv15-v2/NANOAOD"),
+    DBSSample(dataset="/MET/Run2018D-UL2018_NanoAODv15-v2/NANOAOD"),
     # Double EG
     DBSSample(dataset="/DoubleEG/Run2016B-HIPM_UL2016_NanoAODv15-v1/NANOAOD"),
     DBSSample(dataset="/DoubleEG/Run2016B-HIPM_UL2016_NanoAODv15_v2-v1/NANOAOD"),

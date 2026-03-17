@@ -8,6 +8,7 @@ from time import sleep
 from metis.Sample import DBSSample, DirectorySample
 from metis.CondorTask import CondorTask
 from metis.StatsParser import StatsParser
+from skip_dict import BKG_SKIP, DATA_SKIP
 import samples
 from das_nevents import das_info
 
@@ -56,14 +57,24 @@ def split_func(dsname):
             print(f"  -> Found {result['nevents']} events in {result['nfiles']} files ({result['evts_per_file']} evts/file), saved to das_nevents.py")
         else:
             print(f"  -> DAS query failed or returned 0, defaulting to 1 file per job")
-            return 20
+            return 1
     evts_per_file = das_info[dsname]["evts_per_file"]
     if evts_per_file > 0:
         return max(1, math.ceil(MIN_EVENTS_PER_JOB / evts_per_file))
     return 1
 
-def njobs_to_process(dsname):
-    return -1  # -1 = unlimited
+def check_skip(analysis_tag, issig, isdata, isbkg, dataset_name):
+    if issig:
+        return False
+    elif isbkg:
+        ref_dict = BKG_SKIP
+    elif isdata:
+        ref_dict = DATA_SKIP
+    else:
+        raise Exception("Input must be signal, background, or data!")
+    proc_name = dataset_name.split("/")[1]
+    datasets_to_skip = ref_dict.get(analysis_tag, set())
+    return (proc_name in datasets_to_skip)
 
 # ------------------------------------------------------------------
 # Main
@@ -72,10 +83,32 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--arch", choices=["el8", "el9"], default="el8",
-                        help="Target architecture: el8 (no singularity) or el9 (uses singularity)")
+        help="Target architecture: el8 (no singularity) or el9 (uses singularity)")
+    parser.add_argument("-d", "--data", action="store_true",
+        help="Set if running on data")
+    parser.add_argument("-s", "--signal", action="store_true",
+        help="Set if running on signal")
+    parser.add_argument("-b", "--background", action="store_true",
+        help="Set if running on background")
+    parser.add_argument("-t", "--test", action="store_true",
+        help="Set if running a test script")
     args = parser.parse_args()
 
-    unique_key = "Run2_Sig_v15_26Feb2026_v1"
+    unique_key = "nanoaodv15_run3_bkg_12March2026_v1"
+    #unique_key = "nanoaodv15_run3_data_12March2026_v1"
+    #unique_key = "nanoaodv15_run2_data_09March2026_v3"
+    #unique_key = "Test_R3_Data_v2"
+
+    isdata = args.data
+    isbkg = args.background
+    issig = args.signal
+    istest = args.test
+
+    if ((isdata and isbkg) or (isdata and issig) or (isbkg and issig)):
+        raise Exception("Must run on Signal/Background/Data alone!")
+
+    if istest:
+        print("TEST INITIALIZED: Will Use 3Lep Channel and 1 Sample per Dataset")
 
     # Architecture-dependent CMSSW settings (must match setup.sh)
     if args.arch == "el9":
@@ -91,21 +124,30 @@ if __name__ == "__main__":
     datasets = samples.samples_to_submit
 
     # Analysis tags
-    analysis_tags = [
-        "Sig",
-#        "4Lep",
-#        "3Lep",
-#        "2Lep2FJ",
-#        "2Lep1FJ",
-#        "1Lep1FJ",
-#        "0Lep3FJ",
-#        "0Lep2FJ",
-#        "0Lep1FJ",
-#        "0Lep0FJ"
-    ]
-
-    # Optional extra flags for signal datasets
-    signal_flags = ""
+    if issig:
+        analysis_tags = ["Sig"]
+        signal_flags = "--dump_truth --is_signal"
+        njobs_to_process = -1
+    elif istest:
+        signal_flags = ""
+        analysis_tags = [
+            "3Lep"
+        ]
+        njobs_to_process = 1
+    else:
+        signal_flags = ""
+        analysis_tags = [
+            "4Lep",
+            "3Lep",
+            "2Lep2FJ",
+            "2Lep1FJ",
+            "1Lep1FJ",
+            "0Lep3FJ",
+            "0Lep2FJ",
+            "0Lep1FJ",
+            "0Lep0FJ"
+        ]
+        njobs_to_process = -1
 
     # Task summary (all datasets × tags)
     task_summary = {}
@@ -126,7 +168,14 @@ if __name__ == "__main__":
             files = ds.get_files()
             print(f"Found {len(files)} files")
             for analysis_tag in analysis_tags:
+                if check_skip(analysis_tag, issig, isdata, isbkg, ds.get_datasetname()):
+                    continue                
                 tag = f"{unique_key}_{analysis_tag}"
+
+                if istest:
+                    output_dir = f"skim/{tag}"
+                else:
+                    output_dir = f"VVH_Skims/{tag}"
 
                 task = CondorTask(
                     verbose=True,
@@ -136,16 +185,15 @@ if __name__ == "__main__":
                     tag=tag,
                     condor_submit_params=dict({
                         "use_xrootd": True,
-                        "sites": "T2_US_UCSD",
+                        #"sites": "T2_US_UCSD",
                         "classads": [["metis_extraargs", f"{signal_flags} -d ./ -a {analysis_tag} -t Events -T Events"]]
                     }, **({"container": singularity_image} if singularity_image else {})),
-                    max_jobs=njobs_to_process(ds.get_datasetname()),
+                    max_jobs=njobs_to_process,
                     cmssw_version=cmssw_version,
                     scram_arch=scram_arch,
                     input_executable=f"{condorpath}/condor_executable_metis.sh",
                     tarfile=f"{condorpath}/package.tar.xz",
-                    #special_dir=f"skim/{tag}",
-                    special_dir=f"VVH_Skims/{tag}",
+                    special_dir=output_dir,
                     min_completion_fraction=0.50 if skip_tail else 1.0
                 )
 
